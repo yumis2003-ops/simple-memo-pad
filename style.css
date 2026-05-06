@@ -248,6 +248,35 @@ button {
   cursor: text;
 }
 
+.memo-content h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.memo-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+}
+
+.memo-content p {
+  margin-bottom: 8px;
+}
+
+.memo-content h1:first-child,
+.memo-content h2:first-child {
+  margin-top: 0;
+}
+
 .memo-content[data-placeholder]:empty:before {
   content: attr(data-placeholder);
   color: var(--hairline-strong);

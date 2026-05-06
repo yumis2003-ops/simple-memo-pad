@@ -75,27 +75,27 @@ function selectMemo(id) {
 // Render the sidebar list
 function renderMemoList() {
   memoList.innerHTML = '';
-  
+
   // Sort by updatedAt descending
   const sortedMemos = [...memos].sort((a, b) => b.updatedAt - a.updatedAt);
-  
+
   sortedMemos.forEach(memo => {
     const li = document.createElement('li');
     li.className = `memo-item ${memo.id === currentMemoId ? 'active' : ''}`;
-    
+
     // Icon container
     const iconContainer = document.createElement('span');
     iconContainer.innerHTML = documentIcon;
     iconContainer.style.marginRight = '8px';
     iconContainer.style.display = 'flex';
     iconContainer.style.color = 'var(--steel)';
-    
+
     // Title container
     const text = document.createElement('span');
     text.textContent = memo.title || 'Untitled';
     text.style.overflow = 'hidden';
     text.style.textOverflow = 'ellipsis';
-    
+
     li.appendChild(iconContainer);
     li.appendChild(text);
     li.onclick = () => selectMemo(memo.id);
@@ -112,13 +112,13 @@ function handleInput() {
     memo.content = contentInput.innerHTML;
     memo.updatedAt = Date.now();
     breadcrumb.textContent = memo.title || 'Untitled';
-    
+
     // Update list immediately for title change, but don't re-sort immediately
     const activeItem = Array.from(memoList.children).find(li => li.classList.contains('active'));
     if (activeItem) {
       activeItem.lastElementChild.textContent = memo.title || 'Untitled';
     }
-    
+
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
       saveMemos();
@@ -130,13 +130,13 @@ function handleInput() {
 // Delete current memo
 function deleteCurrentMemo() {
   if (!currentMemoId) return;
-  
-  const confirmDelete = confirm('Are you sure you want to delete this memo?');
+
+  const confirmDelete = confirm('このメモを削除しますか？');
   if (!confirmDelete) return;
 
   memos = memos.filter(m => m.id !== currentMemoId);
   saveMemos();
-  
+
   if (memos.length > 0) {
     selectMemo(memos[0].id);
   } else {
@@ -155,7 +155,8 @@ toolbarBtns.forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     const command = btn.getAttribute('data-command');
-    document.execCommand(command, false, null);
+    const value = btn.getAttribute('data-value') || null;
+    document.execCommand(command, false, value);
     contentInput.focus();
     handleInput();
   });
@@ -178,7 +179,7 @@ imageInput.addEventListener('change', (e) => {
     handleInput();
   };
   reader.readAsDataURL(file);
-  
+
   imageInput.value = '';
 });
 
