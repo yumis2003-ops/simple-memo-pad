@@ -241,14 +241,63 @@ button {
   border: none;
   outline: none;
   background: transparent;
-  resize: none;
   flex: 1;
   line-height: 1.55;
   width: 100%;
+  min-height: 50vh;
+  cursor: text;
 }
 
-.memo-content::placeholder {
+.memo-content[data-placeholder]:empty:before {
+  content: attr(data-placeholder);
   color: var(--hairline-strong);
+  pointer-events: none;
+}
+
+.memo-content img {
+  max-width: 100%;
+  border-radius: var(--rounded-md);
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.editor-container:focus-within .editor-toolbar {
+  opacity: 1;
+}
+
+.toolbar-btn {
+  background: transparent;
+  border: none;
+  border-radius: var(--rounded-sm);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--charcoal);
+}
+
+.toolbar-btn:hover {
+  background: rgba(15, 15, 15, 0.05);
+}
+
+.toolbar-separator {
+  width: 1px;
+  height: 16px;
+  background-color: var(--hairline-strong);
+  margin: 0 8px;
 }
 
 /* Responsive adjustments */

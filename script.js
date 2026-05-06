@@ -11,6 +11,9 @@ const newMemoBtn = document.getElementById('newMemoBtn');
 const deleteBtn = document.getElementById('deleteBtn');
 const statusText = document.getElementById('saveStatus');
 const breadcrumb = document.getElementById('currentMemoBreadcrumb');
+const imageInput = document.getElementById('imageInput');
+const addImageBtn = document.getElementById('addImageBtn');
+const toolbarBtns = document.querySelectorAll('.toolbar-btn[data-command]');
 
 let saveTimeout = null;
 
@@ -59,11 +62,11 @@ function selectMemo(id) {
   const memo = memos.find(m => m.id === id);
   if (memo) {
     titleInput.value = memo.title;
-    contentInput.value = memo.content;
+    contentInput.innerHTML = memo.content;
     breadcrumb.textContent = memo.title || 'Untitled';
   } else {
     titleInput.value = '';
-    contentInput.value = '';
+    contentInput.innerHTML = '';
     breadcrumb.textContent = 'Untitled';
   }
   renderMemoList();
@@ -106,7 +109,7 @@ function handleInput() {
   const memo = memos.find(m => m.id === currentMemoId);
   if (memo) {
     memo.title = titleInput.value;
-    memo.content = contentInput.value;
+    memo.content = contentInput.innerHTML;
     memo.updatedAt = Date.now();
     breadcrumb.textContent = memo.title || 'Untitled';
     
@@ -146,6 +149,38 @@ titleInput.addEventListener('input', handleInput);
 contentInput.addEventListener('input', handleInput);
 newMemoBtn.addEventListener('click', createNewMemo);
 deleteBtn.addEventListener('click', deleteCurrentMemo);
+
+// Formatting
+toolbarBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const command = btn.getAttribute('data-command');
+    document.execCommand(command, false, null);
+    contentInput.focus();
+    handleInput();
+  });
+});
+
+// Image insertion
+addImageBtn.addEventListener('click', () => {
+  imageInput.click();
+});
+
+imageInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const base64Url = event.target.result;
+    contentInput.focus();
+    document.execCommand('insertImage', false, base64Url);
+    handleInput();
+  };
+  reader.readAsDataURL(file);
+  
+  imageInput.value = '';
+});
 
 // Initial setup
 if (memos.length === 0) {
