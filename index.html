@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion風メモ帳</title>
+  <meta name="description" content="LocalStorageに保存されるシンプルなメモ帳">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">N</div>
+          <span>My Workspace</span>
+        </div>
+      </div>
+      <div class="sidebar-content">
+        <div class="sidebar-section">
+          <div class="section-title">Private</div>
+          <ul id="memoList" class="memo-list">
+            <!-- Memos go here -->
+          </ul>
+        </div>
+        <button class="button-add-memo" id="newMemoBtn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 1.16663V12.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1.16699 7H12.8337" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          New page
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-nav">
+        <div id="currentMemoBreadcrumb" class="breadcrumb">Untitled</div>
+        <div class="nav-actions">
+          <span id="saveStatus" class="status-text">Saved to LocalStorage</span>
+          <button class="button-ghost" id="deleteBtn">Delete</button>
+        </div>
+      </div>
+      <div class="editor-container">
+        <input type="text" id="memoTitle" class="memo-title" placeholder="Untitled" autocomplete="off">
+        <textarea id="memoContent" class="memo-content" placeholder="Start typing..."></textarea>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
